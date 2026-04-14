@@ -1,4 +1,4 @@
-# Orion — Full Project Specification
+# Orion — Full Project Specification.
 
 > **For Gemini CLI / Agentic AI Development**
 > This document is the single source of truth for the Orion project. All decisions are final unless explicitly marked as Phase 2. Follow this spec precisely when generating code, configs, and infrastructure files.
