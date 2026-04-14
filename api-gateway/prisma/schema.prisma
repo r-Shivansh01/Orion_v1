@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+  jobs         Job[]
+
+  @@map("users")
+}
+
+model Job {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  prompt      String
+  status      String    @default("PENDING")
+  planJson    Json?     @map("plan_json")
+  codeDraft   String?   @map("code_draft")
+  finalOutput String?   @map("final_output")
+  retryCount  Int       @default(0) @map("retry_count")
+  qaFeedback  String?   @map("qa_feedback")
+  qaSeverity  Int?      @map("qa_severity")
+  eventLog    Json      @default("[]") @map("event_log")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  completedAt DateTime? @map("completed_at")
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@map("jobs")
+}

@@ -1,0 +1,86 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push API Gateway
+        uses: docker/build-push-action@v5
+        with:
+          context: ./api-gateway
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/orion-api-gateway:latest
+            ghcr.io/${{ github.repository_owner }}/orion-api-gateway:${{ github.sha }}
+
+      - name: Build and push Notification Service
+        uses: docker/build-push-action@v5
+        with:
+          context: ./notification-service
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/orion-notification:latest
+            ghcr.io/${{ github.repository_owner }}/orion-notification:${{ github.sha }}
+
+      - name: Build and push Planner Agent
+        uses: docker/build-push-action@v5
+        with:
+          context: ./agents/planner
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/orion-planner:latest
+            ghcr.io/${{ github.repository_owner }}/orion-planner:${{ github.sha }}
+
+      - name: Build and push Coder Agent
+        uses: docker/build-push-action@v5
+        with:
+          context: ./agents/coder
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/orion-coder:latest
+            ghcr.io/${{ github.repository_owner }}/orion-coder:${{ github.sha }}
+
+      - name: Build and push QA Agent
+        uses: docker/build-push-action@v5
+        with:
+          context: ./agents/qa
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/orion-qa:latest
+            ghcr.io/${{ github.repository_owner }}/orion-qa:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to DigitalOcean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: root
+          key: ${{ secrets.DO_SSH_KEY }}
+          script: |
+            cd /app/orion
+            # Create .env from secrets if it doesn't exist or update it
+            # In a real scenario, you'd manage secrets more securely
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker compose exec -T api-gateway npx prisma migrate deploy

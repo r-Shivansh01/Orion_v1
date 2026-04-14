@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Lint API Gateway
+        run: |
+          cd api-gateway
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+          # Skip lint if script not found to prevent failure in early stages
+          npm run lint --if-present
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Lint Agents & Notification Service
+        run: |
+          pip install flake8
+          flake8 agents notification-service --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 agents notification-service --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics

@@ -1,0 +1,6 @@
+crewai==0.28.8
+langchain-google-genai==1.0.3
+aio-pika==9.4.1
+asyncpg==0.29.0
+python-dotenv==1.0.1
+pydantic>=2.0.0

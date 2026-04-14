@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #030712; /* gray-950 */
+  --foreground: #f3f4f6; /* gray-100 */
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+  .btn-secondary {
+    @apply bg-gray-800 text-gray-100 hover:bg-gray-700;
+  }
+  .btn-green {
+    @apply bg-green-600 text-white hover:bg-green-700;
+  }
+  .btn-yellow {
+    @apply bg-yellow-600 text-white hover:bg-yellow-700;
+  }
+  .btn-red {
+    @apply bg-red-600 text-white hover:bg-red-700;
+  }
+  .btn-blue {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+  .btn-gray {
+    @apply bg-gray-600 text-white hover:bg-gray-700;
+  }
+  .btn-sm {
+    @apply px-3 py-1 text-sm;
+  }
+  
+  .card {
+    @apply bg-gray-900 border border-gray-800 rounded-lg p-4;
+  }
+
+  .input {
+    @apply bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full;
+  }
+}
+
+/* React Flow customizations */
+.react-flow__node-agent {
+  @apply rounded-lg border-2 border-gray-700 bg-gray-900 text-white p-4 shadow-xl min-w-[200px];
+}
+
+.react-flow__node-agent.active {
+  @apply border-blue-500 shadow-blue-500/20;
+}
+
+.react-flow__handle {
+  @apply w-3 h-3 bg-gray-600 border-2 border-gray-900;
+}
+
+.react-flow__edge-path {
+  @apply stroke-gray-700 stroke-2;
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  @apply stroke-blue-500;
+}
