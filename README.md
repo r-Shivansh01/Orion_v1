@@ -1,13 +1,13 @@
 # Orion_v1
 
-Orion_v1 is an event-driven microservices platform that orchestrates three specialized LLM agents — Alnitak (Planner), Alnilam (Coder), Mintaka (QA) — to complete software tasks autonomously end-to-end.
+Orion_v1 is an event-driven microservices platform that orchestrates three specialized LLM agents — Alnitak (Planner), Alnilam (Coder), Mintaka (QA) — to complete software tasks autonomously end-to-end...
 
 ## Tech Stack
 - **Frontend:** Next.js 14, Tailwind CSS, React Flow
 - **API Gateway:** Node.js, Express, Prisma, RabbitMQ
 - **Notification Service:** Python, FastAPI, WebSockets
 - **Agents:** Python, CrewAI, Gemini 1.5 Flash
-- **Infrastructure:** Docker, RabbitMQ, PostgreSQL, Prometheus, Grafana
+- **Infrastructure:** Docker, RabbitMQ, PostgreSQL, Prometheus, Grafana.
 
 ## Setup Instructions
 
