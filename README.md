@@ -42,15 +42,15 @@ Orion_v1 is an event-driven microservices platform that orchestrates three speci
    ```
 
 6. **Access the platform:**
-   - Frontend: `http://localhost:3000` (once deployed)
+   - Frontend: `http://localhost:3000` (once deployed).
    - API Gateway: `http://localhost:4000`
    - RabbitMQ Management: `http://localhost:15672`
    - Prometheus: `http://localhost:9090`
    - Grafana: `http://localhost:3001`
 
 ## Directory Structure
-- `api-gateway/`: Node.js Express API
-- `notification-service/`: Python FastAPI WebSocket service
-- `agents/`: AI agent services (Planner, Coder, QA)
-- `frontend/`: Next.js web application
-- `infra/`: Configuration for Nginx, Prometheus, and Grafana
+- `api-gateway/`: Node.js Express API.
+- `notification-service/`: Python FastAPI WebSocket service/
+- `agents/`: AI agent services (Planner, Coder, QA).
+- `frontend/`: Next.js web application.
+- `infra/`: Configuration for Nginx, Prometheus, and Grafana.
